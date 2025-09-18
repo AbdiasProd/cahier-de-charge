@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulaire de Conception de Base de Données — AbdiasProd</title>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    :root{
+      --blue:#0066cc; --blue-dark:#004d99; --ink:#003366; --bg:#e6f2ff;
+      --panel:#ffffff; --panel-soft:#f0f8ff; --ok-bg:#d4edda; --ok-fg:#155724;
+      --err-bg:#f8d7da; --err-fg:#721c24; --accent:#99ccff;
+    }
+    *{box-sizing:border-box}
+    body{font-family:"Times New Roman",Times,serif;background:var(--bg);color:var(--ink);line-height:1.6;padding:20px;margin:0}
+    .container{max-width:1000px;margin:0 auto;background:var(--panel);padding:30px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.08)}
+    h1{text-align:center;color:var(--blue);text-transform:uppercase;font-weight:800;margin:10px 0 24px;font-size:28px;border-bottom:2px solid var(--blue);padding-bottom:14px;letter-spacing:.6px}
+    h2{color:var(--blue);text-transform:uppercase;font-weight:700;margin:22px 0 14px;padding-bottom:10px;border-bottom:1px solid var(--accent);font-size:20px}
+    .form-section{margin-bottom:26px;background:var(--panel-soft);padding:18px;border-radius:10px;border-left:6px solid var(--blue)}
+    .form-group{margin-bottom:16px}
+    label{display:block;margin-bottom:8px;font-weight:700;color:#004d99}
+    input[type=text],input[type=email],input[type=number],input[type=date],textarea,select{
+      width:100%;padding:12px;border:1px solid var(--accent);border-radius:6px;font-size:16px;background:#fff
+    }
+    textarea{min-height:100px;resize:vertical}
+    .checkbox-group{margin:8px 0}
+    .checkbox-group label{display:inline-flex;align-items:center;font-weight:400;margin:0 14px 10px 0;cursor:pointer}
+    .checkbox-group input{margin-right:8px}
+    .grid{display:grid;gap:12px}
+    .grid-2{grid-template-columns:1fr 1fr}
+    .grid-3{grid-template-columns:repeat(3,1fr)}
+    .btn{background:var(--blue);color:#fff;border:none;padding:12px 26px;font-size:18px;border-radius:6px;cursor:pointer;display:block;margin:30px auto 0;text-transform:uppercase;font-weight:800}
+    .btn:hover{background:var(--blue-dark)}
+    .btn:disabled{background:#b7d8ff;cursor:not-allowed}
+    .required::after{content:" *";color:#c00}
+    .instructions{font-size:14px;color:var(--blue);margin-top:5px;font-style:italic}
+    .example{background:#e6f2ff;padding:10px;border-radius:6px;margin-top:6px;font-size:14px;border-left:3px solid var(--blue)}
+    .example-title{font-weight:700;margin-bottom:5px}
+    .other-comment{display:none;margin-top:10px;padding:10px;background:#e6f2ff;border-radius:6px;border-left:3px solid var(--blue)}
+    .info-box{background:#fff9e6;padding:12px;border-radius:6px;margin:8px 0;border-left:4px solid #ffcc00}
+    .info-title{font-weight:700;color:#996600;margin-bottom:5px}
+    .success-message,.error-message{display:none;padding:15px;border-radius:6px;margin:18px 0;text-align:center;font-weight:700}
+    .success-message{background:var(--ok-bg);color:var(--ok-fg)}
+    .error-message{background:var(--err-bg);color:var(--err-fg)}
+    small.muted{font-size:13px;color:#456}
+
+    /* Branding AbdiasProd */
+    .brand-bar{max-width:1000px;margin:0 auto 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--blue-dark);color:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+    .brand-left{display:flex;align-items:center;gap:12px}
+    .brand-title{font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:.5px}
+    .brand-contact{font-size:14px;line-height:1.4}
+    .brand-contact span{display:inline-block;margin-right:12px}
+    .brand-footer{max-width:1000px;margin:16px auto 0;font-size:14px;color:var(--ink);opacity:.9;text-align:center}
+    .brand-footer strong{color:var(--blue-dark)}
+    .logo{height:50px;border-radius:6px;object-fit:contain}
+    @media (max-width:720px){
+      .grid-2,.grid-3{grid-template-columns:1fr}
+      .brand-contact span{display:block;margin:2px 0}
+    }
+  </style>
+</head>
+<body>
+  <!-- Bandeau AbdiasProd -->
+  <div class="brand-bar"
+     style="flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px">
+    <div class="brand-left">
+      <!-- Remplace le src par ton vrai chemin -->
+      <img class="logo" src="C:\Users\diexa\Pictures/logo-abdiasprod.png" alt="Logo AbdiasProd">
+      <div class="brand-title">AbdiasProd — Conception de Bases de Données</div>
+    </div>
+    <div class="brand-contact">
+      <span>Tél: 07 08 12 20 02</span>
+      <span>|</span>
+      <span>01 43 05 31 07</span>
+      <span>|</span>
+      <span>Email: abdiasprod2025@gmail.com</span>
+      <span>|</span>
+      <span>Localisation: Bouaké, N'gattakro — Côte d’Ivoire</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Formulaire de Conception de Base de Données</h1>
+    <p style="text-align:center;margin-bottom:24px;font-size:18px">
+      Répondez simplement. Des exemples sont fournis. Les champs marqués d’une étoile sont obligatoires.
+    </p>
+
+    <div id="successMessage" class="success-message">Merci. Formulaire soumis. Nous revenons vers vous rapidement.</div>
+    <div id="errorMessage" class="error-message">Erreur d’envoi. Vérifiez la configuration EmailJS puis réessayez.</div>
+
+    <form id="databaseDesignForm">
+      <!-- 1. Entreprise -->
+      <div class="form-section">
+        <h2>Informations sur votre entreprise</h2>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="clientName" class="required">Nom de l’entreprise / organisation</label>
+            <input type="text" id="clientName" name="clientName" required />
+          </div>
+          <div class="form-group">
+            <label for="sector" class="required">Secteur d’activité</label>
+            <input type="text" id="sector" name="sector" placeholder="Ex: Immobilier, Commerce, Éducation..." required />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="contactPerson" class="required">Votre nom et fonction</label>
+            <input type="text" id="contactPerson" name="contactPerson" required />
+            <div class="instructions">Ex: KOUADIO KOUASSI, Responsable Marketing</div>
+          </div>
+          <div class="form-group">
+            <label for="email" class="required">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input type="text" id="phone" name="phone" />
+          </div>
+          <div class="form-group">
+            <label for="companySize">Taille de l’équipe</label>
+            <select id="companySize" name="companySize">
+              <option value="">-- Sélectionnez --</option>
+              <option value="1-5">1–5</option>
+              <option value="6-20">6–20</option>
+              <option value="21-50">21–50</option>
+              <option value="51-200">51–200</option>
+              <option value="200+">200+</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Contexte & objectifs -->
+      <div class="form-section">
+        <h2>Contexte et objectifs</h2>
+        <div class="form-group">
+          <label for="projectDescription" class="required">Décrivez votre activité principale</label>
+          <textarea id="projectDescription" name="projectDescription" required></textarea>
+          <div class="example">
+            <div class="example-title">Exemples :</div>
+            <p>- Agence immobilière gérant propriétés, clients, contrats, paiements.</p>
+            <p>- Boutique en ligne artisanale avec commandes, livraisons et retours.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="topGoals" class="required">Top 3 objectifs du projet</label>
+          <textarea id="topGoals" name="topGoals" placeholder="- Gagner du temps
+- Suivre les paiements
+- Rapports mensuels auto" required></textarea>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="currentSystem">Comment gérez-vous vos données aujourd’hui ?</label>
+            <textarea id="currentSystem" name="currentSystem"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="problems">Problèmes actuels</label>
+            <textarea id="problems" name="problems"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Données & volumétrie -->
+      <div class="form-section">
+        <h2>Données à gérer</h2>
+
+        <div class="form-group">
+          <label class="required">Types d’informations</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="dataTypes" value="clients"> Clients</label>
+            <label><input type="checkbox" name="dataTypes" value="produits"> Produits/Services</label>
+            <label><input type="checkbox" name="dataTypes" value="commandes"> Commandes/Ventes</label>
+            <label><input type="checkbox" name="dataTypes" value="employes"> Employés</label>
+            <label><input type="checkbox" name="dataTypes" value="fournisseurs"> Fournisseurs</label>
+            <label><input type="checkbox" name="dataTypes" value="stock"> Stock</label>
+            <label><input type="checkbox" name="dataTypes" value="compta"> Comptabilité</label>
+            <label><input type="checkbox" id="otherDataCheckbox" name="dataTypes" value="autre"> Autre</label>
+          </div>
+        </div>
+
+        <div class="other-comment" id="otherDataComment">
+          <div class="form-group">
+            <label for="otherData">Précisez les autres informations</label>
+            <textarea id="otherData" name="otherData"></textarea>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="form-group">
+            <label for="recordsNow">Nombre d’enregistrements actuels (approx.)</label>
+            <input type="number" id="recordsNow" name="recordsNow" min="0" placeholder="Ex: 5000" />
+          </div>
+          <div class="form-group">
+            <label for="recordsMonthly">Créations par mois (approx.)</label>
+            <input type="number" id="recordsMonthly" name="recordsMonthly" min="0" placeholder="Ex: 300" />
+          </div>
+          <div class="form-group">
+            <label for="attachmentsVolume">Pièces jointes par mois</label>
+            <input type="number" id="attachmentsVolume" name="attachmentsVolume" min="0" placeholder="Ex: 200" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="keyAttributes">Champs clés par type de donnée</label>
+          <textarea id="keyAttributes" name="keyAttributes" placeholder="- Client: nom, téléphone, email
+- Produit: code, libellé, prix, TVA
+- Contrat: code, dates, statut, montant"></textarea>
+        </div>
+      </div>
+
+      <!-- 4. Relations & règles métier -->
+      <div class="form-section">
+        <h2>Relations et règles métier</h2>
+        <div class="form-group">
+          <label for="relationsDescription">Comment les informations sont connectées ?</label>
+          <textarea id="relationsDescription" name="relationsDescription" placeholder="- Un client a plusieurs commandes
+- Une commande contient plusieurs produits
+- Un bien a un document “principal” unique"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="businessRules">Règles métier et validations</label>
+          <textarea id="businessRules" name="businessRules" placeholder="- Code client unique par entreprise
+- Statuts: Brouillon, Actif, Clôturé
+- total = prix + taxes - remises
+- Validation manager avant activation"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="lifecycle">Cycle de vie / Statuts</label>
+          <textarea id="lifecycle" name="lifecycle" placeholder="- Devis → Commande → Livraison → Facture → Paiement → Clôture"></textarea>
+        </div>
+      </div>
+
+      <!-- 5. Accès, rôles, permissions -->
+      <div class="form-section">
+        <h2>Accès, rôles et permissions</h2>
+
+        <div class="form-group">
+          <label>Qui utilisera le système ?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="users" value="direction"> Direction</label>
+            <label><input type="checkbox" name="users" value="commerce"> Équipe commerciale</label>
+            <label><input type="checkbox" name="users" value="support"> Service client</label>
+            <label><input type="checkbox" name="users" value="compta"> Comptabilité</label>
+            <label><input type="checkbox" name="users" value="tous"> Tous les employés</label>
+            <label><input type="checkbox" id="otherUsersCheckbox" name="users" value="autre"> Autre</label>
+          </div>
+        </div>
+
+        <div class="other-comment" id="otherUsersComment">
+          <div class="form-group">
+            <label for="otherUsers">Autres utilisateurs</label>
+            <textarea id="otherUsers" name="otherUsers"></textarea>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="form-group">
+            <label for="simultaneousUsers">Utilisateurs simultanés</label>
+            <input type="number" id="simultaneousUsers" name="simultaneousUsers" min="1" />
+          </div>
+          <div class="form-group">
+            <label for="rolesList">Rôles à prévoir</label>
+            <input type="text" id="rolesList" name="rolesList" placeholder="Admin, Manager, Agent, Comptable" />
+          </div>
+          <div class="form-group">
+            <label for="permissionsNotes">Permissions clés</label>
+            <input type="text" id="permissionsNotes" name="permissionsNotes" placeholder="Ex: lecture seule pour rapports" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Docs, notifications, automatisations -->
+      <div class="form-section">
+        <h2>Documents, notifications, automatisations</h2>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="docTypes">Types de documents à gérer</label>
+            <textarea id="docTypes" name="docTypes" placeholder="- Contrats, factures, reçus, quittances
+- Photos, scans PDF, plans"></textarea>
+            <small class="muted">Formats, tailles max, besoin de “document principal”, numérotation automatique.</small>
+          </div>
+          <div class="form-group">
+            <label for="notifications">Notifications nécessaires</label>
+            <textarea id="notifications" name="notifications" placeholder="- Email à la création d’un contrat
+- Rappel SMS 3 jours avant échéance
+- WhatsApp après paiement reçu"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="automations">Automatisations souhaitées</label>
+          <textarea id="automations" name="automations" placeholder="- Génération d’échéancier mensuel
+- Calcul auto des pénalités
+- PDF facture/reçu automatiques"></textarea>
+        </div>
+      </div>
+
+      <!-- 7. Intégrations, import/export -->
+      <div class="form-section">
+        <h2>Intégrations, import/export</h2>
+
+        <div class="form-group">
+          <label for="existingSoftware">Logiciels déjà utilisés</label>
+          <textarea id="existingSoftware" name="existingSoftware" placeholder="Sage, Odoo, Excel, WhatsApp Business, PayGate, Wave, Orange Money"></textarea>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="integration">Le nouveau système doit-il communiquer avec eux ?</label>
+            <select id="integration" name="integration">
+              <option value="">-- Sélectionnez --</option>
+              <option value="yes">Oui</option>
+              <option value="no">Non</option>
+              <option value="not_sure">Je ne sais pas</option>
+            </select>
+          </div>
+          <div class="form-group" id="integrationDetailsGroup" style="display:none">
+            <label for="integrationDetails">Détails d’intégration (si Oui)</label>
+            <textarea id="integrationDetails" name="integrationDetails" placeholder="Quels échanges ? sens (import/export), format (CSV, Excel, API), fréquence."></textarea>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="importSources">Données existantes à importer</label>
+            <textarea id="importSources" name="importSources" placeholder="Sources: Excel, ancien logiciel, Google Sheets. Qualité: doublons, colonnes manquantes…"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exportFormats">Formats d’export souhaités</label>
+            <input type="text" id="exportFormats" name="exportFormats" placeholder="PDF, Excel, CSV, API" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Localisation, conformité, sécurité -->
+      <div class="form-section">
+        <h2>Localisation, devises, conformité, sécurité</h2>
+
+        <div class="grid grid-3">
+          <div class="form-group">
+            <label for="countries">Pays d’opération</label>
+            <input type="text" id="countries" name="countries" placeholder="Ex: Côte d’Ivoire, Ghana" />
+          </div>
+          <div class="form-group">
+            <label for="currencies">Devises</label>
+            <input type="text" id="currencies" name="currencies" placeholder="Ex: XOF, EUR" />
+          </div>
+          <div class="form-group">
+            <label for="taxes">TVA / Taxes</label>
+            <input type="text" id="taxes" name="taxes" placeholder="Ex: TVA 18% sur produits" />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="compliance">Contraintes légales / conformité</label>
+            <textarea id="compliance" name="compliance" placeholder="RGPD, conservation, règles secteur"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="security">Sécurité des données</label>
+            <textarea id="security" name="security" placeholder="Rôles, chiffrement, journal d’audit, niveaux d’accès"></textarea>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="hosting">Hébergement préféré</label>
+            <select id="hosting" name="hosting">
+              <option value="">-- Sélectionnez --</option>
+              <option value="cloud">Cloud</option>
+              <option value="onprem">Sur vos serveurs</option>
+              <option value="not_sure">Je ne sais pas</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="backup">Sauvegardes & reprise</label>
+            <input type="text" id="backup" name="backup" placeholder="Sauvegardes quotidiennes, RPO/RTO" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Interface & performance -->
+      <div class="form-section">
+        <h2>Interface et performance</h2>
+        <div class="grid grid-3">
+          <div class="form-group">
+            <label for="languages">Langues de l’interface</label>
+            <input type="text" id="languages" name="languages" placeholder="Français, Anglais" />
+          </div>
+          <div class="form-group">
+            <label for="devices">Accès souhaité</label>
+            <select id="devices" name="devices">
+              <option value="">-- Sélectionnez --</option>
+              <option value="web_only">Web uniquement</option>
+              <option value="web_mobile">Web + Mobile</option>
+              <option value="mobile_only">Mobile uniquement</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="browsers">Navigateurs utilisés</label>
+            <input type="text" id="browsers" name="browsers" placeholder="Chrome, Edge, Firefox…" />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="uiNeeds">Besoins UX/UI spécifiques</label>
+            <textarea id="uiNeeds" name="uiNeeds" placeholder="Filtres, exports, thème sombre, etc."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="performance">Performance attendue</label>
+            <textarea id="performance" name="performance" placeholder="Temps de réponse, pagination, volumes…"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Rapports -->
+      <div class="form-section">
+        <h2>Rapports et analyses</h2>
+        <div class="form-group">
+          <label>Rapports souhaités</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="reports" value="sales"> Chiffre d’affaires</label>
+            <label><input type="checkbox" name="reports" value="clients"> Analyse clientèle</label>
+            <label><input type="checkbox" name="reports" value="stock"> Stock</label>
+            <label><input type="checkbox" name="reports" value="performance"> Performance équipes</label>
+            <label><input type="checkbox" name="reports" value="financial"> Financier</label>
+            <label><input type="checkbox" id="otherReportsCheckbox" name="reports" value="autre"> Autre</label>
+          </div>
+        </div>
+
+        <div class="other-comment" id="otherReportsComment">
+          <div class="form-group">
+            <label for="otherReports">Autres rapports</label>
+            <textarea id="otherReports" name="otherReports"></textarea>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="form-group">
+            <label for="reportFrequency">Fréquence</label>
+            <select id="reportFrequency" name="reportFrequency">
+              <option value="">-- Sélectionnez --</option>
+              <option value="daily">Quotidienne</option>
+              <option value="weekly">Hebdomadaire</option>
+              <option value="monthly">Mensuelle</option>
+              <option value="quarterly">Trimestrielle</option>
+              <option value="yearly">Annuelle</option>
+              <option value="on_demand">Sur demande</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="kpis">Indicateurs clés (KPI)</label>
+            <input type="text" id="kpis" name="kpis" placeholder="Taux de conversion, délais de paiement" />
+          </div>
+          <div class="form-group">
+            <label for="reportDelivery">Mode de remise</label>
+            <input type="text" id="reportDelivery" name="reportDelivery" placeholder="PDF par mail, dashboard, Excel…" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. Planning, budget, livrables -->
+      <div class="form-section">
+        <h2>Planning, budget, livrables</h2>
+        <div class="grid grid-3">
+          <div class="form-group">
+            <label for="timeline">Date cible de mise en service</label>
+            <input type="date" id="timeline" name="timeline" />
+          </div>
+          <div class="form-group">
+            <label for="budgetRange">Budget estimatif (fourchette)</label>
+            <input type="text" id="budgetRange" name="budgetRange" placeholder="Ex: 1–3 M FCFA" />
+          </div>
+          <div class="form-group">
+            <label for="paymentTerms">Modalités de paiement</label>
+            <input type="text" id="paymentTerms" name="paymentTerms" placeholder="Acompte, jalons, solde…" />
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="milestones">Jalons importants</label>
+            <textarea id="milestones" name="milestones" placeholder="- Atelier cadrage
+- Prototype
+- Recette
+- Formation
+- Go-live"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="acceptance">Critères d’acceptation</label>
+            <textarea id="acceptance" name="acceptance" placeholder="- Scénarios de test OK
+- Rapports livrés
+- Données migrées et vérifiées"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. Support, formation, maintenance -->
+      <div class="form-section">
+        <h2>Support, formation, maintenance</h2>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label for="training">Besoins de formation</label>
+            <textarea id="training" name="training" placeholder="Qui former ? Durée ? Supports ?"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="maintenance">Maintenance souhaitée</label>
+            <textarea id="maintenance" name="maintenance" placeholder="Correctifs, évolutions, hotline, SLA…"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13. Divers -->
+      <div class="form-section">
+        <h2>Contraintes et commentaires</h2>
+        <div class="form-group">
+          <label for="risks">Contraintes / risques connus</label>
+          <textarea id="risks" name="risks" placeholder="Connexion faible, disponibilité limitée, etc."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="otherComments">Autres exigences particulières</label>
+          <textarea id="otherComments" name="otherComments"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">Soumettre le formulaire</button>
+    </form>
+  </div>
+
+  <div class="brand-footer">
+    <strong>AbdiasProd</strong> — Bouaké, N'gattakro, République de Côte d’Ivoire ·
+    Tél: 07 08 12 20 02 / 01 43 05 31 07 ·
+    Email: <a href="mailto:abdiasprod2025@gmail.com">abdiasprod2025@gmail.com</a>
+  </div>
+
+  <script>
+    // ==== EmailJS config: remplace par tes vraies valeurs =====
+    const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+    const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID";
+    const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+    const EMAILJS_ENABLED = EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY"
+      && EMAILJS_SERVICE_ID !== "YOUR_SERVICE_ID"
+      && EMAILJS_TEMPLATE_ID !== "YOUR_TEMPLATE_ID";
+
+    (function(){
+      try { if(EMAILJS_ENABLED) emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
+    })();
+
+    function toggleOtherComment(checkboxId, commentId){
+      const cb = document.getElementById(checkboxId);
+      const box = document.getElementById(commentId);
+      if(!cb || !box) return;
+      cb.addEventListener('change', function(){
+        box.style.display = this.checked ? 'block' : 'none';
+      });
+    }
+    toggleOtherComment('otherDataCheckbox','otherDataComment');
+    toggleOtherComment('otherReportsCheckbox','otherReportsComment');
+    toggleOtherComment('otherUsersCheckbox','otherUsersComment');
+
+    // Intégration: afficher détails si Oui
+    const integrationSelect = document.getElementById('integration');
+    const integrationDetailsGroup = document.getElementById('integrationDetailsGroup');
+    integrationSelect.addEventListener('change',function(){
+      integrationDetailsGroup.style.display = this.value === 'yes' ? 'block' : 'none';
+    });
+
+    function getCheckedValues(name){
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+        .map(cb=>cb.value).join(', ');
+    }
+
+    const successEl = document.getElementById('successMessage');
+    const errorEl = document.getElementById('errorMessage');
+
+    document.getElementById('databaseDesignForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.textContent = 'Envoi en cours…';
+      successEl.style.display='none'; errorEl.style.display='none';
+
+      const formData = {
+        // ===== Infos AbdiasProd (fixes) =====
+        provider_name: 'AbdiasProd',
+        provider_phones: '07 08 12 20 02 | 01 43 05 31 07',
+        provider_email: 'abdiasprod2025@gmail.com',
+        provider_location: "Bouaké / N'gattakro — République de Côte d'Ivoire",
+
+        // ===== Champs du formulaire =====
+        clientName: document.getElementById('clientName').value,
+        sector: document.getElementById('sector').value,
+        contactPerson: document.getElementById('contactPerson').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        companySize: document.getElementById('companySize').value,
+
+        projectDescription: document.getElementById('projectDescription').value,
+        topGoals: document.getElementById('topGoals').value,
+        currentSystem: document.getElementById('currentSystem').value,
+        problems: document.getElementById('problems').value,
+
+        dataTypes: getCheckedValues('dataTypes'),
+        otherData: document.getElementById('otherData').value,
+        recordsNow: document.getElementById('recordsNow').value,
+        recordsMonthly: document.getElementById('recordsMonthly').value,
+        attachmentsVolume: document.getElementById('attachmentsVolume').value,
+        keyAttributes: document.getElementById('keyAttributes').value,
+
+        relationsDescription: document.getElementById('relationsDescription').value,
+        businessRules: document.getElementById('businessRules').value,
+        lifecycle: document.getElementById('lifecycle').value,
+
+        users: getCheckedValues('users'),
+        otherUsers: document.getElementById('otherUsers').value,
+        simultaneousUsers: document.getElementById('simultaneousUsers').value,
+        rolesList: document.getElementById('rolesList').value,
+        permissionsNotes: document.getElementById('permissionsNotes').value,
+
+        docTypes: document.getElementById('docTypes').value,
+        notifications: document.getElementById('notifications').value,
+        automations: document.getElementById('automations').value,
+
+        existingSoftware: document.getElementById('existingSoftware').value,
+        integration: document.getElementById('integration').value,
+        integrationDetails: document.getElementById('integrationDetails').value,
+        importSources: document.getElementById('importSources').value,
+        exportFormats: document.getElementById('exportFormats').value,
+
+        countries: document.getElementById('countries').value,
+        currencies: document.getElementById('currencies').value,
+        taxes: document.getElementById('taxes').value,
+        compliance: document.getElementById('compliance').value,
+        security: document.getElementById('security').value,
+        hosting: document.getElementById('hosting').value,
+        backup: document.getElementById('backup').value,
+
+        languages: document.getElementById('languages').value,
+        devices: document.getElementById('devices').value,
+        browsers: document.getElementById('browsers').value,
+        uiNeeds: document.getElementById('uiNeeds').value,
+        performance: document.getElementById('performance').value,
+
+        reports: getCheckedValues('reports'),
+        otherReports: document.getElementById('otherReports').value,
+        reportFrequency: document.getElementById('reportFrequency').value,
+        kpis: document.getElementById('kpis').value,
+        reportDelivery: document.getElementById('reportDelivery').value,
+
+        timeline: document.getElementById('timeline').value,
+        budgetRange: document.getElementById('budgetRange').value,
+        paymentTerms: document.getElementById('paymentTerms').value,
+        milestones: document.getElementById('milestones').value,
+        acceptance: document.getElementById('acceptance').value,
+
+        training: document.getElementById('training').value,
+        maintenance: document.getElementById('maintenance').value,
+
+        risks: document.getElementById('risks').value,
+        otherComments: document.getElementById('otherComments').value,
+
+        submissionDate: new Date().toLocaleString('fr-FR')
+      };
+
+      try{
+        if(!EMAILJS_ENABLED){
+          // Pas de config -> pas d’appel réseau. On montre un message clair.
+          throw new Error("EmailJS non configuré");
+        }
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formData);
+        successEl.style.display='block';
+        (e.target).reset();
+        // referme sections conditionnelles
+        ['integrationDetailsGroup','otherDataComment','otherReportsComment','otherUsersComment']
+          .forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
+      }catch(err){
+        errorEl.textContent = "Erreur d’envoi. Configurez EmailJS (clé, service, template) puis réessayez.";
+        errorEl.style.display='block';
+      }finally{
+        btn.disabled=false; btn.textContent='Soumettre le formulaire';
+      }
+    });
+  </script>
+</body>
+</html>
